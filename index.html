@@ -32,7 +32,41 @@
   <!-- ===== EDIT YOUR CONTENT BELOW ===== -->
   <main class="home">
     <header class="home-head">
-      <img class="portrait" src="assets/profile.jpeg" alt="Grace Ra Kim" />
+      <div class="portrait-col">
+        <img class="portrait" src="assets/profile.jpeg" alt="Grace Ra Kim" />
+        <!-- Icons are inline SVG so they inherit the link colour (and so
+             the hover state) with no icon font or extra request.
+             aria-hidden: the link text already names each destination. -->
+        <nav class="links" aria-label="Profiles">
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=2htCHlQAAAAJ">
+            <!-- viewBox is the glyph's measured ink box; the cap is wider
+                 than tall, so it's centred vertically in the square slot. -->
+            <svg class="icon" viewBox="0.35 0.85 15.3 12.8" aria-hidden="true">
+              <path d="M8 1.5 1 6l7 4.5L15 6 8 1.5Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M3.6 7.7v3.1c0 1.2 2 2.2 4.4 2.2s4.4-1 4.4-2.2V7.7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            <span>Google&nbsp;Scholar</span>
+          </a>
+          <a href="https://github.com/gkim65">
+            <!-- viewBox is the glyph's measured ink box. -->
+            <svg class="icon" viewBox="0.48 0.5 14.98 14.65" aria-hidden="true">
+              <path fill="currentColor" d="M8 .5a7.5 7.5 0 0 0-2.37 14.62c.37.07.5-.16.5-.36v-1.3c-2.05.45-2.49-.94-2.49-.94-.34-.86-.83-1.09-.83-1.09-.68-.46.05-.45.05-.45.75.05 1.14.77 1.14.77.67 1.13 1.75.8 2.18.62.07-.48.26-.81.47-1-1.64-.19-3.36-.82-3.36-3.64 0-.8.29-1.46.76-1.97-.08-.19-.33-.94.07-1.96 0 0 .62-.2 2.02.75a6.99 6.99 0 0 1 3.68 0c1.4-.95 2.01-.75 2.01-.75.4 1.02.15 1.77.08 1.96.47.51.75 1.17.75 1.97 0 2.83-1.72 3.45-3.37 3.63.27.23.5.68.5 1.37v2.03c0 .2.13.44.51.36A7.5 7.5 0 0 0 8 .5Z"/>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/grace-ra-kim/">
+            <!-- The full logo lockup: "in" knocked out of a filled rounded
+                 square. fill-rule="evenodd" punches the letterforms through
+                 the plate, so the whole mark is a single currentColor path
+                 and still follows the link colour on hover. -->
+            <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path fill="currentColor" fill-rule="evenodd" d="M2.4 0h11.2A2.4 2.4 0 0 1 16 2.4v11.2a2.4 2.4 0 0 1-2.4 2.4H2.4A2.4 2.4 0 0 1 0 13.6V2.4A2.4 2.4 0 0 1 2.4 0Zm.9 6.2h2.05v6.5H3.3V6.2Zm1.02-3.1a1.19 1.19 0 1 1 0 2.38 1.19 1.19 0 0 1 0-2.38ZM6.6 6.2h1.96v.89h.03c.27-.5.94-1.02 1.94-1.02 2.07 0 2.47 1.28 2.47 2.94v3.69h-2.05V9.42c0-.72-.01-1.65-1.05-1.65-1.05 0-1.21.77-1.21 1.59v3.34H6.6V6.2Z"/>
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+          <!-- add or remove links as needed -->
+        </nav>
+      </div>
       <div class="intro">
         <h1>Grace Ra Kim</h1>
         <p class="role">PhD Candidate</p>
@@ -71,13 +105,6 @@
           developing the technical and policy frameworks needed to operate responsibly
           in space.
         </p>
-
-        <nav class="links" aria-label="Profiles">
-          <a href="https://scholar.google.com/citations?hl=en&amp;user=2htCHlQAAAAJ">Google&nbsp;Scholar</a>
-          <a href="https://github.com/gkim65">GitHub</a>
-          <a href="https://www.linkedin.com/in/grace-ra-kim/">LinkedIn</a>
-          <!-- add or remove links as needed -->
-        </nav>
 
       </div>
     </header>
