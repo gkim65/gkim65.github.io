@@ -29,72 +29,128 @@
     </span>
   </nav>
 
-  <main class="projects">
+  <main class="news-page">
     <h2>News</h2>
     <p class="page-intro">Press coverage and mentions.</p>
 
-    <!-- ===== Add new items at the TOP of this list =====
-         Each item: <li> with an optional <span class="news-date">,
-         the headline as a link, and the outlet in <span class="news-outlet">.
-         Dates are unverified placeholders — correct them as you go. -->
-    <ul class="news-list">
-      <li>
-        <a href="https://www.hertzfoundation.org/news/the-hertz-foundation-travel-fund-removing-barriers-to-professional-growth/">The
-          Hertz Foundation Travel Fund: removing barriers to professional growth</a>
-        <span class="news-outlet">Hertz Foundation</span>
-      </li>
-      <li>
-        <a href="https://seas.harvard.edu/news/aerospace-collective-celebrates-satellite-launch">Aerospace
-          collective celebrates satellite launch</a>
-        <span class="news-outlet">Harvard SEAS</span>
-      </li>
-      <li>
-        <a href="https://news.harvard.edu/gazette/story/newsplus/two-harvard-students-named-2025-hertz-fellows/">Two
-          Harvard students named 2025 Hertz Fellows</a>
-        <span class="news-outlet">Harvard Gazette</span>
-      </li>
-      <li>
-        <a href="https://seas.harvard.edu/news/grace-kim-recognized-aviation-week-network">Grace
-          Kim recognized by Aviation Week Network</a>
-        <span class="news-outlet">Harvard SEAS</span>
-      </li>
-      <li>
-        <a href="https://seas.harvard.edu/news/senior-profile-grace-kim">Senior
-          profile: Grace Kim</a>
-        <span class="news-outlet">Harvard SEAS</span>
-      </li>
-      <li>
-        <a href="https://harvardtechnologyreview.com/2023/10/08/grace-kim-2023-top-ten-seniors-in-innovation/">Grace
-          Kim: 2023 top ten seniors in innovation</a>
-        <span class="news-outlet">Harvard Technology Review</span>
-      </li>
-      <li>
-        <a href="https://seas.harvard.edu/news/seven-seniors-honored-deans-award-outstanding-senior-capstone-projects">Seven
-          seniors honored with Dean&rsquo;s Award for outstanding senior capstone projects</a>
-        <span class="news-outlet">Harvard SEAS</span>
-      </li>
-      <li>
-        <a href="https://news.harvard.edu/gazette/story/2023/01/harvard-seniors-head-to-u-k-as-marshall-scholars/">Harvard
-          seniors head to U.K. as Marshall Scholars</a>
-        <span class="news-outlet">Harvard Gazette</span>
-      </li>
-      <li>
-        <a href="https://www.thecrimson.com/article/2022/12/14/marshall-scholarship-2023/">Marshall
-          Scholarship 2023</a>
-        <span class="news-outlet">The Harvard Crimson</span>
-      </li>
-      <li>
-        <a href="https://seas.harvard.edu/news/engineering-better-eating-habits">Engineering
-          better eating habits</a>
-        <span class="news-outlet">Harvard SEAS</span>
-      </li>
-      <li>
-        <a href="https://seas.harvard.edu/news/crimson-space">Crimson
-          in space</a>
-        <span class="news-outlet">Harvard SEAS</span>
-      </li>
-    </ul>
+    <div class="news-layout">
+      <!-- Year filter. Buttons are generated from the list below by
+           assets/news.js, so adding an item in a new year Just Works. -->
+      <nav class="year-nav" aria-label="Filter by year">
+        <button class="year-btn is-active" type="button" data-year="all">All</button>
+      </nav>
+
+      <!-- ===== Add new items at the TOP =====
+           Each <li> needs data-year (drives the filter). Titles, dates and
+           thumbnails were taken from each article's own page/OpenGraph data.
+           Images live in assets/news/. -->
+      <ul class="news-list">
+        <li data-year="2026">
+          <a class="news-item" href="https://www.hertzfoundation.org/news/the-hertz-foundation-travel-fund-removing-barriers-to-professional-growth/">
+            <img class="news-thumb" src="assets/news/hertz-travel.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">The Hertz Foundation Travel Fund: Removing Barriers to Professional Growth</span>
+              <span class="news-meta">Hertz Foundation &middot; June 2026</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2026">
+          <a class="news-item" href="https://seas.harvard.edu/news/aerospace-collective-celebrates-satellite-launch">
+            <img class="news-thumb" src="assets/news/satellite-launch.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Aerospace Collective celebrates satellite launch</span>
+              <span class="news-meta">Harvard SEAS &middot; May 2026</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2025">
+          <a class="news-item" href="https://news.harvard.edu/gazette/story/newsplus/two-harvard-students-named-2025-hertz-fellows/">
+            <img class="news-thumb" src="assets/news/hertz-fellows.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Two Harvard students named 2025 Hertz Fellows</span>
+              <span class="news-meta">Harvard Gazette &middot; May 2025</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2024">
+          <a class="news-item" href="https://seas.harvard.edu/news/grace-kim-recognized-aviation-week-network">
+            <img class="news-thumb" src="assets/news/aviation-week.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Grace Kim recognized by Aviation Week Network</span>
+              <span class="news-meta">Harvard SEAS &middot; March 2024</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2023">
+          <a class="news-item" href="https://harvardtechnologyreview.com/2023/10/08/grace-kim-2023-top-ten-seniors-in-innovation/">
+            <img class="news-thumb" src="assets/news/htr-top-ten.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Grace Kim &mdash; 2023 Top Ten Seniors in Innovation</span>
+              <span class="news-meta">Harvard Technology Review &middot; October 2023</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2023">
+          <a class="news-item" href="https://seas.harvard.edu/news/senior-profile-grace-kim">
+            <img class="news-thumb" src="assets/news/senior-profile.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Senior profile: Grace Kim</span>
+              <span class="news-meta">Harvard SEAS &middot; May 2023</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2023">
+          <a class="news-item" href="https://seas.harvard.edu/news/seven-seniors-honored-deans-award-outstanding-senior-capstone-projects">
+            <img class="news-thumb" src="assets/news/deans-award.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Seven seniors honored with Dean&rsquo;s Award for outstanding senior capstone projects</span>
+              <span class="news-meta">Harvard SEAS &middot; May 2023</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2023">
+          <a class="news-item" href="https://news.harvard.edu/gazette/story/2023/01/harvard-seniors-head-to-u-k-as-marshall-scholars/">
+            <img class="news-thumb" src="assets/news/marshall-gazette.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Harvard seniors head to U.K. as Marshall Scholars</span>
+              <span class="news-meta">Harvard Gazette &middot; January 2023</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2022">
+          <a class="news-item" href="https://www.thecrimson.com/article/2022/12/14/marshall-scholarship-2023/">
+            <img class="news-thumb" src="assets/news/marshall-crimson.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Three Harvard Seniors Awarded 2023 Marshall Scholarship</span>
+              <span class="news-meta">The Harvard Crimson &middot; December 2022</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2022">
+          <a class="news-item" href="https://seas.harvard.edu/news/crimson-space">
+            <img class="news-thumb" src="assets/news/crimson-space.jpg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Crimson &hellip; in &hellip; space!</span>
+              <span class="news-meta">Harvard SEAS &middot; June 2022</span>
+            </span>
+          </a>
+        </li>
+        <li data-year="2021">
+          <!-- This article publishes no press image, so it falls back to the
+               outlet wordmark. Replace with a real photo if one turns up. -->
+          <a class="news-item" href="https://seas.harvard.edu/news/engineering-better-eating-habits">
+            <img class="news-thumb" src="assets/news/outlet-seas.svg" alt="" loading="lazy" />
+            <span class="news-text">
+              <span class="news-title">Engineering Better Eating Habits</span>
+              <span class="news-meta">Harvard SEAS &middot; December 2021</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </main>
+
+  <script src="assets/news.js"></script>
   <script src="assets/theme.js"></script>
 </body>
 </html>

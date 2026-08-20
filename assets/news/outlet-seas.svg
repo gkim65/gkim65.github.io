@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fallback thumbnail for Harvard SEAS articles with no press image.
+     Drawn here rather than scraped: a wordmark in Harvard crimson on a
+     tinted field, sized to the same 3:2 box as the photo thumbnails. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 88" width="132" height="88"
+     role="img" aria-label="Harvard SEAS">
+  <rect width="132" height="88" fill="#f2e4e6" />
+  <rect x="0" y="0" width="132" height="3" fill="#a51c30" />
+  <text x="66" y="40" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="21"
+        letter-spacing="1.5" fill="#a51c30">SEAS</text>
+  <text x="66" y="59" text-anchor="middle"
+        font-family="ui-monospace, Menlo, monospace" font-size="7.5"
+        letter-spacing="0.8" fill="#8d5b63">HARVARD</text>
+</svg>

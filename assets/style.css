@@ -4,10 +4,10 @@
   --muted: #5b6470;      /* secondary text */
   --line: #e2e5ea;       /* hairlines */
   --paper: #fbfbf9;      /* light page background */
-  --sky: #0a1120;        /* research page background */
+  --sky: #05070c;        /* research page background — near-black, faint cool cast */
   --sky-text: #cbd5e3;   /* text on dark */
-  --accent: #e0894a;     /* highlight signal (hover/active) */
-  --accent-dim: #7d5836;
+  --accent: #5c7cfa;     /* highlight signal (hover/active) — periwinkle */
+  --accent-dim: #3b5bd9;
   --serif: Georgia, "Times New Roman", serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
 }
@@ -18,12 +18,12 @@
    tokens change — every rule below reads them, so nothing else needs
    a dark variant. The research page is dark in both themes by design. */
 :root[data-theme="dark"] {
-  --ink: #dfe5ee;
-  --muted: #8e9aab;
-  --line: #263041;
-  --paper: #0d1219;
-  --accent: #e0894a;
-  --accent-dim: #f0a86f;   /* lightened: the dim variant must read on dark */
+  --ink: #e8e8e8;
+  --muted: #8a8a8a;
+  --line: #242424;         /* lifted off pure black so hairlines stay visible */
+  --paper: #000000;
+  --accent: #91a7ff;       /* lifted periwinkle: the light value is too dark on black */
+  --accent-dim: #b5c4ff;   /* lightened: the dim variant must read on dark */
 }
 
 /* Smooth the switch, but never fight a reduced-motion preference. */
@@ -97,6 +97,11 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .topbar a { border-bottom: none; }
 .topbar-links a { margin-left: 20px; color: var(--muted); }
 .topbar-links a[aria-current="page"] { color: var(--ink); }
+/* Hover: match the name link and theme toggle. Listed after the
+   [aria-current] rule so the current page highlights too. */
+.topbar a:hover,
+.topbar-links a:hover,
+.topbar-links a[aria-current="page"]:hover { color: var(--accent); }
 
 /* Theme toggle button (sits in the topbar) */
 .theme-toggle {
@@ -119,6 +124,8 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .research-body { background: var(--sky); color: var(--sky-text); }
 .research-body .topbar a { color: var(--sky-text); }
 .research-body .topbar-links a[aria-current="page"] { color: #fff; }
+.research-body .topbar a:hover,
+.research-body .topbar-links a[aria-current="page"]:hover { color: var(--accent); }
 .research {
   max-width: 960px;
   margin: 0 auto;
@@ -151,7 +158,7 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .hot { cursor: pointer; transition: opacity .15s; }
 .hit { fill: transparent; }
 .hot:hover .sat rect,
-.hot.active .sat rect { fill: var(--accent); stroke: #ffd9b3; }
+.hot.active .sat rect { fill: var(--accent); stroke: #ccd8ff; }
 .hot:hover .station,
 .hot.active .station { fill: var(--accent); }
 .hot:hover .scene-label,
@@ -194,19 +201,68 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .project-list p { margin: 0; color: var(--muted); }
 
 /* ===== News page ===== */
-.page-intro { color: var(--muted); margin: 0 0 8px; }
-.news-list { list-style: none; padding: 0; margin: 0; }
-.news-list li {
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
+.news-page { max-width: 960px; margin: 0 auto; padding: 4vh 28px 10vh; }
+.news-page h2 { font-size: 1.4rem; margin: 0 0 4px; }
+.page-intro { color: var(--muted); margin: 0 0 28px; }
+
+/* Sidebar year filter + list */
+.news-layout { display: flex; gap: 44px; align-items: flex-start; }
+.year-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 0 0 88px;
+  position: sticky;
+  top: 24px;           /* keeps the years in view while the list scrolls */
 }
-.news-list a { display: block; }
-.news-outlet {
+.year-btn {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-align: left;
+  padding: 4px 8px;
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.year-btn:hover { color: var(--accent); }
+.year-btn.is-active {
+  color: var(--ink);
+  border-left-color: var(--accent);
+}
+
+.news-list { list-style: none; padding: 0; margin: 0; flex: 1; min-width: 0; }
+.news-list li { border-top: 1px solid var(--line); }
+.news-list li:first-child { border-top: none; }
+
+/* Whole row is one link: square thumb left, text right */
+.news-item {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: none;
+  text-decoration: none;
+}
+.news-thumb {
+  width: 132px;
+  height: 88px;           /* 3:2 — gently landscape, closer to the source crops */
+  flex: 0 0 132px;
+  object-fit: cover;      /* crops to fill, never squashes */
+  border-radius: 3px;
+  background: var(--line);
+  display: block;
+}
+.news-text { min-width: 0; }
+.news-title { display: block; color: var(--ink); }
+.news-item:hover .news-title { color: var(--accent-dim); }
+.news-meta {
   display: block;
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--muted);
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 /* ===== Motion / accessibility ===== */
@@ -219,4 +275,20 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   .home { padding-top: 4vh; }
   .home-head { gap: 24px; }
   .portrait { width: 130px; height: 130px; }
+
+  /* News: year filter becomes a horizontal strip above the list */
+  .news-layout { flex-direction: column; gap: 18px; }
+  .year-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: auto;
+    position: static;
+    gap: 4px;
+  }
+  .year-btn {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+  }
+  .year-btn.is-active { border-left-color: transparent; border-bottom-color: var(--accent); }
+  .news-thumb { width: 102px; height: 68px; flex-basis: 102px; }
 }
