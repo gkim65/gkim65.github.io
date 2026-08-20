@@ -1,85 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grace Kim</title>
-<style>
-  :root {
-    --bg: #fdfdfc;
-    --fg: #1b1b1a;
-    --muted: #6b6b66;
-    --link: #2c5f8a;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14140f;
-      --fg: #eceae4;
-      --muted: #9c9a92;
-      --link: #8fbcdc;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0 auto;
-    padding: 4rem 1.5rem 6rem;
-    max-width: 40rem;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.05rem;
-    line-height: 1.65;
-  }
-  h1 { font-size: 1.9rem; margin: 0 0 .25rem; }
-  .tagline { color: var(--muted); margin: 0 0 2.5rem; }
-  h2 {
-    font-size: .8rem;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: var(--muted);
-    margin: 2.5rem 0 .75rem;
-    font-family: system-ui, sans-serif;
-  }
-  a { color: var(--link); text-decoration: none; border-bottom: 1px solid currentColor; }
-  a:hover { opacity: .7; }
-  ul { padding-left: 1.1rem; margin: 0; }
-  li { margin-bottom: .5rem; }
-  footer {
-    margin-top: 4rem;
-    color: var(--muted);
-    font-size: .85rem;
-    font-family: system-ui, sans-serif;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grace Ra Kim</title>
+  <meta name="description" content="Grace Ra Kim — PhD Candidate researching satellite conjunction analysis and ground stations." />
+  <link rel="stylesheet" href="assets/style.css" />
+  <!-- Set the theme before first paint so there's no flash of the wrong colours. -->
+  <script>
+    (function () {
+      try {
+        var s = localStorage.getItem('theme');
+        var dark = s ? s === 'dark'
+          : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
+  <nav class="topbar">
+    <a href="index.html" aria-current="page">Grace Ra Kim</a>
+    <span class="topbar-links">
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="news.html">News</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">light</button>
+    </span>
+  </nav>
 
-<h1>Grace Kim</h1>
-<p class="tagline">Stanford &middot; researcher</p>
+  <!-- ===== EDIT YOUR CONTENT BELOW ===== -->
+  <main class="home">
+    <header class="home-head">
+      <img class="portrait" src="assets/profile.jpeg" alt="Grace Ra Kim" />
+      <div class="intro">
+        <h1>Grace Ra Kim</h1>
+        <p class="role">PhD Candidate</p>
+        <p class="bio">
+          I&rsquo;m a PhD candidate in the Aeronautics and Astronautics Department at
+          Stanford University, working with
+          <a href="https://mykel.kochenderfer.com/">Professor Mykel Kochenderfer</a> in the
+          <a href="https://sisl.stanford.edu/">Stanford Intelligent Systems Laboratory</a>.
+          My research spans autonomous decision-making for space systems, from
+          <a href="research.html#deep-space">robust precomputed autonomy for deep-space
+          missions</a> like the Enceladus Orbilander with
+          <a href="https://www.nasa.gov/intelligent-systems-division/autonomous-systems-and-robotics/admg/">NASA
+          Ames</a> to satellite conjunction and collision avoidance, space traffic
+          management, and related questions in public
+          policy. Much of my work focuses on developing decision-making methods for
+          safer and more reliable operation in uncertain and increasingly congested
+          space environments.
+        </p>
 
-<p>
-  Hi, I'm Grace. I'm a researcher at Stanford. This is my little corner of the
-  internet, where I keep notes on what I'm working on.
-</p>
+        <p class="bio">
+          A large portion of my research is motivated by my direct experience building
+          spacecraft hardware. As chief engineer of the Harvard Satellite Team, I led
+          the initial team that designed, built, and launched HUCSat, a 2U CubeSat selected
+          through NASA&rsquo;s CubeSat Launch Initiative,
+          <a href="https://seas.harvard.edu/news/aerospace-collective-celebrates-satellite-launch">launched
+          in April 2026 from Cape Canaveral, FL</a>.
+          I&rsquo;ve also worked as a Payload Mechanical Engineering
+          Intern at SpaceX, where I designed flight hardware currently flown on
+          Starlink V2 Mini satellites.
+        </p>
 
-<h2>Research</h2>
-<p>
-  A short description of your research interests goes here &mdash; the questions
-  you care about and the tools you use to get at them.
-</p>
+        <p class="bio">
+          Before Stanford, I earned a B.S. in Engineering Sciences at Harvard and an M.Phil in Advanced
+          Computer Science at Cambridge as a Marshall Scholar. Broadly, I&rsquo;m
+          interested in making space systems more autonomous, reliable, and safe, and in
+          developing the technical and policy frameworks needed to operate responsibly
+          in space.
+        </p>
 
-<h2>Writing</h2>
-<ul>
-  <li>Publications and preprints coming soon.</li>
-</ul>
+        <nav class="links" aria-label="Profiles">
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=2htCHlQAAAAJ">Google&nbsp;Scholar</a>
+          <a href="https://github.com/gkim65">GitHub</a>
+          <a href="https://www.linkedin.com/in/grace-ra-kim/">LinkedIn</a>
+          <!-- add or remove links as needed -->
+        </nav>
 
-<h2>Elsewhere</h2>
-<ul>
-  <li><a href="https://github.com/gkim65">GitHub</a></li>
-  <li><a href="mailto:gkim65@stanford.edu">gkim65@stanford.edu</a></li>
-</ul>
-
-<footer>Last updated August 2026.</footer>
-
+      </div>
+    </header>
+  </main>
+  <!-- ===== END CONTENT ===== -->
+  <script src="assets/theme.js"></script>
 </body>
 </html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News — Grace Ra Kim</title>
+  <meta name="description" content="Press and news coverage featuring Grace Ra Kim." />
+  <link rel="stylesheet" href="assets/style.css" />
+  <!-- Set the theme before first paint so there's no flash of the wrong colours. -->
+  <script>
+    (function () {
+      try {
+        var s = localStorage.getItem('theme');
+        var dark = s ? s === 'dark'
+          : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <nav class="topbar">
+    <a href="index.html">← Grace Ra Kim</a>
+    <span class="topbar-links">
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="news.html" aria-current="page">News</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">light</button>
+    </span>
+  </nav>
+
+  <main class="projects">
+    <h2>News</h2>
+    <p class="page-intro">Press coverage and mentions.</p>
+
+    <!-- ===== Add new items at the TOP of this list =====
+         Each item: <li> with an optional <span class="news-date">,
+         the headline as a link, and the outlet in <span class="news-outlet">.
+         Dates are unverified placeholders — correct them as you go. -->
+    <ul class="news-list">
+      <li>
+        <a href="https://www.hertzfoundation.org/news/the-hertz-foundation-travel-fund-removing-barriers-to-professional-growth/">The
+          Hertz Foundation Travel Fund: removing barriers to professional growth</a>
+        <span class="news-outlet">Hertz Foundation</span>
+      </li>
+      <li>
+        <a href="https://seas.harvard.edu/news/aerospace-collective-celebrates-satellite-launch">Aerospace
+          collective celebrates satellite launch</a>
+        <span class="news-outlet">Harvard SEAS</span>
+      </li>
+      <li>
+        <a href="https://news.harvard.edu/gazette/story/newsplus/two-harvard-students-named-2025-hertz-fellows/">Two
+          Harvard students named 2025 Hertz Fellows</a>
+        <span class="news-outlet">Harvard Gazette</span>
+      </li>
+      <li>
+        <a href="https://seas.harvard.edu/news/grace-kim-recognized-aviation-week-network">Grace
+          Kim recognized by Aviation Week Network</a>
+        <span class="news-outlet">Harvard SEAS</span>
+      </li>
+      <li>
+        <a href="https://seas.harvard.edu/news/senior-profile-grace-kim">Senior
+          profile: Grace Kim</a>
+        <span class="news-outlet">Harvard SEAS</span>
+      </li>
+      <li>
+        <a href="https://harvardtechnologyreview.com/2023/10/08/grace-kim-2023-top-ten-seniors-in-innovation/">Grace
+          Kim: 2023 top ten seniors in innovation</a>
+        <span class="news-outlet">Harvard Technology Review</span>
+      </li>
+      <li>
+        <a href="https://seas.harvard.edu/news/seven-seniors-honored-deans-award-outstanding-senior-capstone-projects">Seven
+          seniors honored with Dean&rsquo;s Award for outstanding senior capstone projects</a>
+        <span class="news-outlet">Harvard SEAS</span>
+      </li>
+      <li>
+        <a href="https://news.harvard.edu/gazette/story/2023/01/harvard-seniors-head-to-u-k-as-marshall-scholars/">Harvard
+          seniors head to U.K. as Marshall Scholars</a>
+        <span class="news-outlet">Harvard Gazette</span>
+      </li>
+      <li>
+        <a href="https://www.thecrimson.com/article/2022/12/14/marshall-scholarship-2023/">Marshall
+          Scholarship 2023</a>
+        <span class="news-outlet">The Harvard Crimson</span>
+      </li>
+      <li>
+        <a href="https://seas.harvard.edu/news/engineering-better-eating-habits">Engineering
+          better eating habits</a>
+        <span class="news-outlet">Harvard SEAS</span>
+      </li>
+      <li>
+        <a href="https://seas.harvard.edu/news/crimson-space">Crimson
+          in space</a>
+        <span class="news-outlet">Harvard SEAS</span>
+      </li>
+    </ul>
+  </main>
+  <script src="assets/theme.js"></script>
+</body>
+</html>

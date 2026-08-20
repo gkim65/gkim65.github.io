@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Grace Ra Kim</title>
+  <meta name="description" content="Selected projects — HUCsat, theses, and more." />
+  <link rel="stylesheet" href="assets/style.css" />
+  <!-- Set the theme before first paint so there's no flash of the wrong colours. -->
+  <script>
+    (function () {
+      try {
+        var s = localStorage.getItem('theme');
+        var dark = s ? s === 'dark'
+          : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <nav class="topbar">
+    <a href="index.html">← Grace Ra Kim</a>
+    <span class="topbar-links">
+      <a href="research.html">Research</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="news.html">News</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">light</button>
+    </span>
+  </nav>
+
+  <main class="projects">
+    <h2>Projects</h2>
+    <ul class="project-list">
+      <li>
+        <h3>HUCsat</h3>
+        <p>CubeSat, now in orbit. One or two sentences on your role and what it does.</p>
+      </li>
+      <li>
+        <h3>Master's Thesis</h3>
+        <p>Title and a sentence on the contribution. Link to PDF if you want.</p>
+      </li>
+      <li>
+        <h3>Senior Thesis</h3>
+        <p>Title and a sentence on the contribution.</p>
+      </li>
+      <!-- add more projects as <li> blocks -->
+    </ul>
+  </main>
+  <script src="assets/theme.js"></script>
+</body>
+</html>
