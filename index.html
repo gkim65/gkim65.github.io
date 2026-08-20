@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grace Kim</title>
+<style>
+  :root {
+    --bg: #fdfdfc;
+    --fg: #1b1b1a;
+    --muted: #6b6b66;
+    --link: #2c5f8a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14140f;
+      --fg: #eceae4;
+      --muted: #9c9a92;
+      --link: #8fbcdc;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+    max-width: 40rem;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+  h1 { font-size: 1.9rem; margin: 0 0 .25rem; }
+  .tagline { color: var(--muted); margin: 0 0 2.5rem; }
+  h2 {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    margin: 2.5rem 0 .75rem;
+    font-family: system-ui, sans-serif;
+  }
+  a { color: var(--link); text-decoration: none; border-bottom: 1px solid currentColor; }
+  a:hover { opacity: .7; }
+  ul { padding-left: 1.1rem; margin: 0; }
+  li { margin-bottom: .5rem; }
+  footer {
+    margin-top: 4rem;
+    color: var(--muted);
+    font-size: .85rem;
+    font-family: system-ui, sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<h1>Grace Kim</h1>
+<p class="tagline">Stanford &middot; researcher</p>
+
+<p>
+  Hi, I'm Grace. I'm a researcher at Stanford. This is my little corner of the
+  internet, where I keep notes on what I'm working on.
+</p>
+
+<h2>Research</h2>
+<p>
+  A short description of your research interests goes here &mdash; the questions
+  you care about and the tools you use to get at them.
+</p>
+
+<h2>Writing</h2>
+<ul>
+  <li>Publications and preprints coming soon.</li>
+</ul>
+
+<h2>Elsewhere</h2>
+<ul>
+  <li><a href="https://github.com/gkim65">GitHub</a></li>
+  <li><a href="mailto:gkim65@stanford.edu">gkim65@stanford.edu</a></li>
+</ul>
+
+<footer>Last updated August 2026.</footer>
+
+</body>
+</html>
