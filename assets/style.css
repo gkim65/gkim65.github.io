@@ -149,45 +149,83 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .research-body .theme-toggle { color: var(--sky-text); border-color: #33506f; }
 .research-body .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ===== Research page ===== */
-.research-body { background: var(--sky); color: var(--sky-text); }
-.research-body .topbar a { color: var(--sky-text); }
-.research-body .topbar-links a[aria-current="page"] { color: #fff; }
-.research-body .topbar a:hover,
-.research-body .topbar-links a[aria-current="page"]:hover { color: var(--accent); }
-.research {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 10px 28px 10vh;
+/* ===== Research page: scene hero + publications ===== */
+/* Scene colours are tokens so the whole page follows the light/dark
+   toggle. Light values are cool greys on paper; dark values are the
+   original navy-on-near-black. */
+:root {
+  --scene-bg: #eef1f6;
+  --earth-in: #cdd9e8;
+  --earth-out: #e6ebf3;
+  --scene-line: #94a6bf;
+  --scene-ink: #5b6b83;
+  --sat-body: #7c8da8;
+  --sat-edge: #4a5a72;
 }
-.scene-wrap { text-align: center; }
+:root[data-theme="dark"] {
+  --scene-bg: #05070c;
+  --earth-in: #16304b;
+  --earth-out: #060b14;
+  --scene-line: #38506e;
+  --scene-ink: #6f86a4;
+  --sat-body: #aebfd4;
+  --sat-edge: #dce6f2;
+}
+.research-body { background: var(--scene-bg); }
+.research-body .pubs-page { background: var(--paper); }
+
+/* Hero fills the viewport, then scrolls away so the Earth clips at the
+   top edge as the list rises past it. */
+.scene-hero {
+  min-height: calc(100vh - 62px);   /* 62px ~= topbar height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 28px 26px;
+  overflow: hidden;
+}
+.scene-wrap { text-align: center; width: 100%; max-width: 960px; }
 .scene-hint {
   font-family: var(--mono);
   font-size: 0.78rem;
-  color: #7c8aa0;
+  color: var(--scene-ink);
   letter-spacing: 0.03em;
   margin: 0 0 12px;
 }
-.scene { width: 100%; height: auto; max-height: 62vh; overflow: visible; }
+/* overflow:visible is intentional — the Earth circle (r=560) extends past
+   the 900x520 viewBox by design, and .scene-hero clips the result. */
+.scene { width: 100%; height: auto; max-height: 66vh; overflow: visible; }
+.scroll-cue {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--scene-ink);
+  margin: 20px 0 0;
+  opacity: .75;
+}
 
 /* Scene elements */
-.orbit { fill: none; stroke: #38506e; stroke-width: 1.2; stroke-dasharray: 4 5; }
-.station { fill: #5d7a9e; }
-.sat rect { fill: #aebfd4; stroke: #dce6f2; stroke-width: 0.8; }
-.sat line { stroke: #6f86a4; stroke-width: 1.4; }
-.tca-line { stroke: #8ea3bf; stroke-width: 1; stroke-dasharray: 2 3; }
+.earth-stop-in { stop-color: var(--earth-in); }
+.earth-stop-out { stop-color: var(--earth-out); }
+.earth { stroke: var(--scene-line); stroke-width: 1; }
+.orbit { fill: none; stroke: var(--scene-line); stroke-width: 1.2; stroke-dasharray: 4 5; }
+.station { fill: var(--scene-ink); }
+.sat rect { fill: var(--sat-body); stroke: var(--sat-edge); stroke-width: 0.8; }
+.sat line { stroke: var(--scene-ink); stroke-width: 1.4; }
+.tca-line { stroke: var(--scene-ink); stroke-width: 1; stroke-dasharray: 2 3; }
 .scene-label {
   font-family: var(--mono);
   font-size: 11px;
-  fill: #6f86a4;
+  fill: var(--scene-ink);
   text-anchor: middle;
 }
 
 /* Interactive hotspots */
-.hot { cursor: pointer; transition: opacity .15s; }
+.hot { cursor: pointer; }
 .hit { fill: transparent; }
 .hot:hover .sat rect,
-.hot.active .sat rect { fill: var(--accent); stroke: #ccd8ff; }
+.hot.active .sat rect { fill: var(--accent); stroke: var(--accent); }
 .hot:hover .station,
 .hot.active .station { fill: var(--accent); }
 .hot:hover .scene-label,
@@ -195,31 +233,122 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .hot:focus { outline: none; }
 .hot:focus-visible .scene-label { fill: var(--accent); text-decoration: underline; }
 
-/* ===== Paper list ===== */
-.papers { margin-top: 36px; }
-.papers-head { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid #24344c; padding-bottom: 8px; }
-.papers h2 { font-size: 1.1rem; margin: 0; color: #fff; }
-.clear-filter {
+/* ===== Publications ===== */
+.pubs-page { max-width: 960px; margin: 0 auto; padding: 6vh 28px 10vh; }
+.pubs-page h2 { font-size: 1.4rem; margin: 0 0 26px; }
+
+.pubs-layout { display: flex; gap: 44px; align-items: flex-start; }
+.pub-filters { flex: 0 0 150px; position: sticky; top: 24px; }
+.filter-group { margin-bottom: 22px; }
+.filter-label {
   font-family: var(--mono);
-  font-size: 0.75rem;
-  background: none;
-  border: 1px solid #33506f;
-  color: var(--sky-text);
-  padding: 3px 10px;
-  border-radius: 3px;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 7px;
+}
+.year-nav, .area-nav { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+.filter-note {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: var(--accent);
+  margin: 0;
+}
+
+.pub-list { list-style: none; padding: 0; margin: 0; flex: 1; min-width: 0; }
+.pub-list li { padding: 20px 0; border-top: 1px solid var(--line); }
+.pub-list li:first-child { border-top: none; padding-top: 0; }
+.pub-title {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  font-weight: normal;
+  line-height: 1.4;
+  margin: 0 0 5px;
+}
+.pub-authors { margin: 0 0 3px; font-size: 0.9rem; }
+.pub-authors b { font-weight: 600; }
+.pub-venue { margin: 0; font-size: 0.86rem; font-style: italic; color: var(--muted); }
+.pub-tags { margin: 9px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--muted);
   cursor: pointer;
+  transition: color .15s, border-color .15s;
 }
-.clear-filter:hover { border-color: var(--accent); color: var(--accent); }
-.paper-list { list-style: none; padding: 0; margin: 18px 0 0; }
-.paper-list li {
-  padding: 14px 0;
-  border-bottom: 1px solid #1a2740;
-  transition: opacity .2s;
+.tag:hover, .tag.is-active { color: var(--accent); border-color: var(--accent); }
+/* Link chips: arXiv / DOI / Presentation / BibTeX. Generous gap so each
+   chip reads as its own control rather than one segmented bar. */
+.pub-links { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 14px; }
+.pub-links a,
+.bib-toggle {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  line-height: 1.5;
+  transition: border-color .15s, color .15s;
 }
-.paper-list li.dim { opacity: 0.28; }
-.paper-title { display: block; color: #eef2f8; }
-.paper-meta { display: block; font-size: 0.85rem; color: #7c8aa0; margin: 2px 0 4px; }
-.paper-link { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); border: none; }
+.pub-links a:hover,
+.bib-toggle:hover,
+.bib-toggle.is-open { border-color: var(--accent); }
+/* Placeholder links (no URL yet) read as inactive but stay visible. */
+.pub-links a.link-todo { color: var(--muted); }
+.pub-links a.link-todo:hover { border-color: var(--line); }
+
+/* BibTeX: no filled panel — just a quiet rule on the left, so it reads as
+   a note attached to the entry rather than a code block. */
+.bib-wrap { position: relative; margin: 12px 0 0; }
+.bib {
+  margin: 0;
+  padding: 2px 74px 2px 14px;   /* right pad keeps text clear of the copy button */
+  border-left: 2px solid var(--line);
+  background: none;
+  font-size: 0.7rem;
+  line-height: 1.65;
+  color: var(--muted);
+  overflow-x: auto;
+}
+.bib code {
+  font-family: var(--mono);
+  white-space: pre;
+  color: inherit;
+}
+.bib-copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.bib-copy:hover { border-color: var(--accent); }
+.pub-empty { color: var(--muted); font-style: italic; }
+.pub-foot {
+  margin: 34px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+  color: var(--muted);
+}
 
 /* ===== Projects page ===== */
 .projects { max-width: 720px; margin: 0 auto; padding: 4vh 28px 10vh; }
@@ -322,4 +451,77 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   }
   .year-btn.is-active { border-left-color: transparent; border-bottom-color: var(--accent); }
   .news-thumb { width: 102px; height: 68px; flex-basis: 102px; }
+
+  /* Publications: sidebar filters become horizontal strips above the list.
+     At 375px a 150px sidebar would leave ~125px for titles. */
+  .pubs-layout { flex-direction: column; gap: 22px; }
+  .pub-filters { flex-basis: auto; position: static; width: 100%; }
+  .filter-group { margin-bottom: 14px; }
+  .year-nav, .area-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  /* Area labels are long ("AI evaluation & policy"), so give the area
+     chips a border on all sides rather than the sidebar's left rule. */
+  .area-nav .year-btn {
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 3px 9px;
+  }
+  .area-nav .year-btn.is-active { border-color: var(--accent); }
+
+  /* Link chips: tighten the gap that suits desktop, and keep tap targets
+     a usable size. */
+  .pub-links { gap: 10px; }
+  .pub-links a, .bib-toggle { padding: 4px 9px; }
+
+  /* BibTeX lines run to ~100 chars; let them wrap instead of forcing a
+     horizontal scroll, and drop the right pad since the copy button
+     moves below the block. */
+  .bib { padding: 2px 0 2px 12px; font-size: 0.66rem; }
+  .bib code { white-space: pre-wrap; word-break: break-word; }
+  .bib-copy { position: static; margin-top: 8px; }
+
+  /* Scene hero: a 900x520 schematic can't fill a tall narrow screen, so
+     stop reserving a full viewport for it. */
+  .scene-hero { min-height: auto; padding-top: 12px; padding-bottom: 18px; }
+  .scene { max-height: none; }
+  .pubs-page { padding-top: 4vh; }
+
+  /* Landing page: let the intro drop below the portrait cleanly.
+     min-width:0 (not 100%) — 100% is measured against the flex container
+     and pushes the text past the right edge once the 190px portrait and
+     the 40px gap are also in the row. */
+  .home-head { gap: 20px; }
+  .intro { min-width: 0; flex-basis: 100%; }
+
+  /* Nav wraps to a second line rather than clipping "News". */
+  .topbar {
+    padding: 12px 18px;
+    flex-wrap: wrap;
+    gap: 6px 0;
+    font-size: 0.78rem;
+  }
+  .topbar-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; }
+  .topbar-links a { margin-left: 0; }
+  .theme-toggle { margin-left: 0; }
+  .home, .pubs-page, .news-page, .projects { padding-left: 18px; padding-right: 18px; }
+
+  /* Guard against unbreakable strings (DOIs, long arXiv ids, URLs) forcing
+     the layout wide. No hyphens: auto — it hyphenates ordinary prose
+     mid-word, which reads badly in the bio. */
+  .pub-title, .pub-authors, .pub-venue, .news-title, .bio, .page-intro, h1, h2 {
+    overflow-wrap: break-word;
+  }
+  .scene-hint { padding: 0 4px; }
+}
+
+/* Very narrow (iPhone SE and similar) */
+@media (max-width: 380px) {
+  .portrait, .portrait-col { width: 108px; height: 108px; flex-basis: 108px; }
+  .portrait-col { height: auto; }
+  .news-thumb { width: 84px; height: 56px; flex-basis: 84px; }
+  .news-item { gap: 12px; }
+  h1 { font-size: 1.7rem; }
 }
