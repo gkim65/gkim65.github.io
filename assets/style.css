@@ -23,7 +23,7 @@
   --line: #242424;         /* lifted off pure black so hairlines stay visible */
   --paper: #000000;
   --accent: #91a7ff;       /* lifted periwinkle: the light value is too dark on black */
-  --accent-dim: #b5c4ff;   /* lightened: the dim variant must read on dark */
+  --accent-dim: #c3cfff;   /* on dark, "dim" is the brighter hover value */
 }
 
 /* Smooth the switch, but never fight a reduced-motion preference. */
@@ -41,7 +41,7 @@ body {
 }
 
 a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
-a:hover { border-color: var(--accent); color: var(--accent-dim); }
+a:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ===== Landing page ===== */
 .home {
@@ -75,6 +75,11 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   margin: 0 0 18px;
 }
 .bio { margin: 0 0 22px; }
+/* Bio links are periwinkle at rest, not just on hover — at --ink they were
+   the same colour as the surrounding prose and easy to miss. Scoped to .bio
+   so nav, profile links and news rows stay neutral. */
+.bio a { color: var(--accent); border-bottom-color: var(--accent); }
+.bio a:hover { color: var(--accent-dim); border-bottom-color: var(--accent-dim); }
 .pages { display: flex; flex-wrap: wrap; gap: 18px; }
 /* Profile links: stacked under the portrait, in its column. */
 .links {
@@ -110,7 +115,7 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   top: -1px;
 }
 .pages a { border-bottom: none; font-style: italic; color: var(--muted); }
-.pages a:hover { color: var(--accent-dim); }
+.pages a:hover { color: var(--accent); }
 
 /* ===== Shared top bar ===== */
 .topbar {
@@ -414,7 +419,7 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 }
 .news-text { min-width: 0; }
 .news-title { display: block; color: var(--ink); }
-.news-item:hover .news-title { color: var(--accent-dim); }
+.news-item:hover .news-title { color: var(--accent); }
 .news-meta {
   display: block;
   font-family: var(--mono);
