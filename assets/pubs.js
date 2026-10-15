@@ -62,6 +62,14 @@
     return b;
   }
 
+  // #area-nav's data-order lists area keys in button order; areas it
+  // omits follow in order of first appearance.
+  var order = (areaNav.dataset.order || '').split(/\s+/).filter(Boolean);
+  function rank(a) { var i = order.indexOf(a); return i === -1 ? order.length : i; }
+  areas = areas.map(function (a, i) { return [a, i]; })
+    .sort(function (x, y) { return rank(x[0]) - rank(y[0]) || x[1] - y[1]; })
+    .map(function (p) { return p[0]; });
+
   years.forEach(function (y) { addBtn(yearNav, 'year', y, y, false); });
   addBtn(areaNav, 'area', 'all', 'All', true);
   areas.forEach(function (a) { addBtn(areaNav, 'area', a, areaLabels[a] || a, false); });
@@ -146,6 +154,11 @@
       }
     });
   });
+
+  // ?area=<key> preselects an area filter, so other pages can link
+  // straight to one grouping. Unknown keys are ignored.
+  var urlArea = new URLSearchParams(window.location.search).get('area');
+  if (urlArea && areas.indexOf(urlArea) !== -1) area = urlArea;
 
   apply();
 
