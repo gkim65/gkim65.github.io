@@ -13,6 +13,7 @@ Personal academic site. Plain HTML/CSS/JS — no build step.
 - `assets/news.js` — year filter for the news page.
 - `assets/theme.js` — light/dark toggle.
 - `assets/profile.jpeg` — portrait; `assets/news/` — news thumbnails.
+- `robots.txt`, `sitemap.xml` — for search engines. Add a new page to the sitemap; each page's `<head>` also has a description, canonical link and link-preview (Open Graph) tags, and `index.html` carries the structured `Person` data.
 
 ## Adding a publication
 Add an `<li>` to the list in `research.html`, newest first. `data-year` drives the year filter and `data-areas` (space-separated keys such as `autonomy conjunction`) the area filter; the inline `.tag` spans give each area its label. Every entry shows arXiv, DOI, Presentation and BibTeX buttons; a missing one stays as a greyed `<a class="link-todo" aria-disabled="true">`, and a slot that can never apply is left out.
