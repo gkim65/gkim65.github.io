@@ -4,8 +4,6 @@
   --muted: #5b6470;      /* secondary text */
   --line: #e2e5ea;       /* hairlines */
   --paper: #fbfbf9;      /* light page background */
-  --sky: #05070c;        /* research page background — near-black, faint cool cast */
-  --sky-text: #cbd5e3;   /* text on dark */
   --accent: #5c7cfa;     /* highlight signal (hover/active) — periwinkle */
   --accent-dim: #3b5bd9;
   --serif: Georgia, "Times New Roman", serif;
@@ -16,7 +14,7 @@
    Applied when <html> carries data-theme="dark" (set by assets/theme.js,
    either from the saved preference or the OS setting). Only the colour
    tokens change — every rule below reads them, so nothing else needs
-   a dark variant. The research page is dark in both themes by design. */
+   a dark variant. */
 :root[data-theme="dark"] {
   --ink: #e8e8e8;
   --muted: #8a8a8a;
@@ -206,93 +204,6 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   line-height: 1.4;
 }
 .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
-.research-body .theme-toggle { color: var(--sky-text); border-color: #33506f; }
-.research-body .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
-
-/* ===== Research page: scene hero + publications ===== */
-/* Scene colours are tokens so the whole page follows the light/dark
-   toggle. Light values are cool greys on paper; dark values are the
-   original navy-on-near-black. */
-:root {
-  --scene-bg: #eef1f6;
-  --earth-in: #cdd9e8;
-  --earth-out: #e6ebf3;
-  --scene-line: #94a6bf;
-  --scene-ink: #5b6b83;
-  --sat-body: #7c8da8;
-  --sat-edge: #4a5a72;
-}
-:root[data-theme="dark"] {
-  --scene-bg: #05070c;
-  --earth-in: #16304b;
-  --earth-out: #060b14;
-  --scene-line: #38506e;
-  --scene-ink: #6f86a4;
-  --sat-body: #aebfd4;
-  --sat-edge: #dce6f2;
-}
-.research-body { background: var(--scene-bg); }
-.research-body .pubs-page { background: var(--paper); }
-
-/* Hero fills the viewport, then scrolls away so the Earth clips at the
-   top edge as the list rises past it. */
-.scene-hero {
-  min-height: calc(100vh - 62px);   /* 62px ~= topbar height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 28px 26px;
-  overflow: hidden;
-}
-.scene-wrap { text-align: center; width: 100%; max-width: 960px; }
-.scene-hint {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--scene-ink);
-  letter-spacing: 0.03em;
-  margin: 0 0 12px;
-}
-/* overflow:visible is intentional — the Earth circle (r=560) extends past
-   the 900x520 viewBox by design, and .scene-hero clips the result. */
-.scene { width: 100%; height: auto; max-height: 66vh; overflow: visible; }
-.scroll-cue {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  color: var(--scene-ink);
-  margin: 20px 0 0;
-  opacity: .75;
-}
-
-/* Scene elements */
-.earth-stop-in { stop-color: var(--earth-in); }
-.earth-stop-out { stop-color: var(--earth-out); }
-.earth { stroke: var(--scene-line); stroke-width: 1; }
-.orbit { fill: none; stroke: var(--scene-line); stroke-width: 1.2; stroke-dasharray: 4 5; }
-.station { fill: var(--scene-ink); }
-.sat rect { fill: var(--sat-body); stroke: var(--sat-edge); stroke-width: 0.8; }
-.sat line { stroke: var(--scene-ink); stroke-width: 1.4; }
-.tca-line { stroke: var(--scene-ink); stroke-width: 1; stroke-dasharray: 2 3; }
-.scene-label {
-  font-family: var(--mono);
-  font-size: 11px;
-  fill: var(--scene-ink);
-  text-anchor: middle;
-}
-
-/* Interactive hotspots */
-.hot { cursor: pointer; }
-.hit { fill: transparent; }
-.hot:hover .sat rect,
-.hot.active .sat rect { fill: var(--accent); stroke: var(--accent); }
-.hot:hover .station,
-.hot.active .station { fill: var(--accent); }
-.hot:hover .scene-label,
-.hot.active .scene-label { fill: var(--accent); }
-.hot:focus { outline: none; }
-.hot:focus-visible .scene-label { fill: var(--accent); text-decoration: underline; }
-
 /* ===== Publications ===== */
 .pubs-page { max-width: 960px; margin: 0 auto; padding: 6vh 28px 10vh; }
 .pubs-page h2 { font-size: 1.4rem; margin: 0 0 26px; }
@@ -309,15 +220,63 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   margin: 0 0 7px;
 }
 .year-nav, .area-nav { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
-.filter-note {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  line-height: 1.45;
-  color: var(--accent);
-  margin: 0;
-}
 
-.pub-list { list-style: none; padding: 0; margin: 0; flex: 1; min-width: 0; }
+.pubs-main { flex: 1; min-width: 0; }
+.pub-list { list-style: none; padding: 0; margin: 0; }
+
+/* Area visual: a dark "space window" in both themes (see assets/area-visuals.js). */
+.area-stage { margin: 0 0 30px; }
+.area-stage > canvas {
+  display: block;
+  width: 100%;
+  height: clamp(200px, 30vw, 290px);
+  border-radius: 10px;
+  background: #05070e;
+  box-shadow: 0 0 0 1px var(--line), 0 18px 40px -24px rgba(60, 90, 220, 0.45);
+}
+/* The display rules above and below would otherwise override [hidden]. */
+.area-stage > canvas[hidden], .area-grid[hidden] { display: none; }
+/* "All": a grid of small live tiles, three across (two on phones). */
+.area-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.area-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.area-tile canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  background: #05070e;
+  box-shadow: 0 0 0 1px var(--line);
+  transition: box-shadow .2s, transform .2s;
+}
+.area-tile-label { font-family: var(--mono); font-size: 0.74rem; line-height: 1.35; transition: color .2s; }
+.area-tile:hover canvas,
+.area-tile:focus-visible canvas { box-shadow: 0 0 0 1px var(--accent), 0 12px 28px -18px rgba(92, 124, 250, 0.7); transform: translateY(-2px); }
+.area-tile:hover .area-tile-label,
+.area-tile:focus-visible .area-tile-label { color: var(--accent); }
+.area-tile:focus-visible { outline: none; }
+.area-caption {
+  margin: 10px 2px 0;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.area-caption:empty { display: none; }
+.area-stage.is-in { animation: stage-in .5s ease both; }
+.area-stage.is-in ~ .pub-list { animation: list-in .55s ease .12s both; }
+@keyframes stage-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes list-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .pub-list li { padding: 20px 0; border-top: 1px solid var(--line); }
 .pub-list li:first-child { border-top: none; padding-top: 0; }
 .pub-title {
@@ -364,8 +323,10 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .bib-toggle:hover,
 .bib-toggle.is-open { border-color: var(--accent); }
 /* Placeholder links (no URL yet) read as inactive but stay visible. */
-.pub-links a.link-todo { color: var(--muted); }
-.pub-links a.link-todo:hover { border-color: var(--line); }
+.pub-links a.link-todo,
+.bib-toggle:disabled { color: var(--muted); opacity: .55; cursor: default; }
+.pub-links a.link-todo:hover,
+.bib-toggle:disabled:hover { border-color: var(--line); color: var(--muted); }
 
 /* BibTeX: no filled panel — just a quiet rule on the left, so it reads as
    a note attached to the entry rather than a code block. */
@@ -485,7 +446,7 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 
 /* ===== Motion / accessibility ===== */
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  * { transition: none !important; animation: none !important; }
 }
 
 /* ===== Mobile ===== */
@@ -543,11 +504,12 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   .bib code { white-space: pre-wrap; word-break: break-word; }
   .bib-copy { position: static; margin-top: 8px; }
 
-  /* Scene hero: a 900x520 schematic can't fill a tall narrow screen, so
-     stop reserving a full viewport for it. */
-  .scene-hero { min-height: auto; padding-top: 12px; padding-bottom: 18px; }
-  .scene { max-height: none; }
   .pubs-page { padding-top: 4vh; }
+  .area-stage { margin-bottom: 24px; }
+  .area-stage > canvas { height: 230px; border-radius: 8px; }
+  .area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .area-tile canvas { border-radius: 6px; }
+  .area-tile-label { font-size: 0.7rem; }
 
   /* Landing page: let the intro drop below the portrait cleanly.
      min-width:0 (not 100%) — 100% is measured against the flex container
@@ -578,7 +540,6 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   .pub-title, .pub-authors, .pub-venue, .news-title, .bio, .page-intro, h1, h2 {
     overflow-wrap: break-word;
   }
-  .scene-hint { padding: 0 4px; }
 }
 
 /* Very narrow (iPhone SE and similar) */

@@ -1,36 +1,27 @@
-// Year / area / scene filters for the publication list.
+// Year and area filters for the publication list.
 //
-// ONE filter is active at a time — selecting in any group clears the other
-// two. With ~11 publications, combining filters would narrow most pairs to
-// a single paper or an empty list, so peer filters are both simpler to
-// reason about and impossible to dead-end.
+// One filter is active at a time: picking a year clears the area and vice
+// versa. With ~20 publications, combining them would narrow most pairs to
+// one paper or an empty list.
 //
-//   year   — buttons built from each <li>'s data-year
-//   area   — buttons built from data-areas; the inline tags are clickable too
-//   topic  — hovering/clicking a region of the SVG scene, via data-topics
+//   year  — buttons built from each <li>'s data-year
+//   area  — buttons built from data-areas; the inline tags are clickable too.
+//           #area-nav lists the main areas (data-order); every other area
+//           goes in #area-more.
 //
-// Adding a publication needs no changes here; only the data- attributes.
-//
-// TODO revisit past ~40 publications: combining filters (year AND area)
-// starts to earn its keep at that size. It was tried at 11 papers and 10
-// of the 20 year x area pairs came back empty, which just produces dead
-// ends. To switch back, make the `ok` expression in apply() below AND the
-// three conditions together instead of picking the first active one — and
-// add an empty-state message naming which filters conflict.
+// ?area=<key> in the URL preselects an area, so other pages can link to one
+// grouping. Adding a publication needs no changes here, only data- attributes.
 
 (function () {
   var yearNav = document.getElementById('year-nav');
   var areaNav = document.getElementById('area-nav');
+  var moreNav = document.getElementById('area-more');
   var items = Array.prototype.slice.call(document.querySelectorAll('.pub-list li'));
   var empty = document.querySelector('.pub-empty');
-  var note = document.getElementById('scene-note');
-  var hotspots = Array.prototype.slice.call(document.querySelectorAll('.hot'));
   if (!yearNav || !areaNav || !items.length) return;
 
   var year = 'all';
   var area = 'all';
-  var topic = null;        // hover preview, or locked by a click
-  var lockedTopic = null;
 
   // Labels come from the tags already in the markup, so the buttons and
   // the inline tags can never disagree.
@@ -52,111 +43,79 @@
     return acc;
   }, []);
 
-  function addBtn(nav, key, value, label, active) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'year-btn' + (active ? ' is-active' : '');
-    b.dataset[key] = value;
-    b.textContent = label;
-    nav.appendChild(b);
-    return b;
-  }
-
-  // #area-nav's data-order lists area keys in button order; areas it
-  // omits follow in order of first appearance.
-  var order = (areaNav.dataset.order || '').split(/\s+/).filter(Boolean);
-  function rank(a) { var i = order.indexOf(a); return i === -1 ? order.length : i; }
-  areas = areas.map(function (a, i) { return [a, i]; })
+  function keys(nav) { return ((nav && nav.dataset.order) || '').split(/\s+/).filter(Boolean); }
+  var mainAreas = keys(areaNav).filter(function (a) { return areas.indexOf(a) !== -1; });
+  var moreOrder = keys(moreNav);
+  function rank(a) { var i = moreOrder.indexOf(a); return i === -1 ? moreOrder.length : i; }
+  var moreAreas = areas.filter(function (a) { return mainAreas.indexOf(a) === -1; })
+    .map(function (a, i) { return [a, i]; })
     .sort(function (x, y) { return rank(x[0]) - rank(y[0]) || x[1] - y[1]; })
     .map(function (p) { return p[0]; });
 
-  years.forEach(function (y) { addBtn(yearNav, 'year', y, y, false); });
-  addBtn(areaNav, 'area', 'all', 'All', true);
-  areas.forEach(function (a) { addBtn(areaNav, 'area', a, areaLabels[a] || a, false); });
+  function addBtn(nav, key, value, label) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'year-btn';
+    b.dataset[key] = value;
+    b.textContent = label;
+    nav.appendChild(b);
+  }
+
+  years.forEach(function (y) { addBtn(yearNav, 'year', y, y); });
+  addBtn(areaNav, 'area', 'all', 'All');
+  mainAreas.forEach(function (a) { addBtn(areaNav, 'area', a, areaLabels[a] || a); });
+  if (moreNav) {
+    moreAreas.forEach(function (a) { addBtn(moreNav, 'area', a, areaLabels[a] || a); });
+    moreNav.closest('.filter-group').hidden = !moreAreas.length;
+  }
 
   function apply() {
-    var active = lockedTopic || topic;
     var shown = 0;
-
     items.forEach(function (li) {
       var areaList = (li.dataset.areas || '').split(/\s+/).filter(Boolean);
-      var topicList = (li.dataset.topics || '').split(/\s+/).filter(Boolean);
-      // Exactly one of these is ever narrowing — see the note at the top.
-      // This is the line to change for AND behaviour (see the ~40-paper
-      // TODO); the filters themselves already track independent state.
-      var ok = active ? topicList.indexOf(active) !== -1
-             : area !== 'all' ? areaList.indexOf(area) !== -1
+      var ok = area !== 'all' ? areaList.indexOf(area) !== -1
              : year !== 'all' ? li.dataset.year === year
              : true;
       li.hidden = !ok;
       if (ok) shown++;
     });
-
     if (empty) empty.hidden = shown > 0;
 
     yearNav.querySelectorAll('button').forEach(function (b) {
-      b.classList.toggle('is-active', b.dataset.year === year);
+      b.classList.toggle('is-active', b.dataset.year === year && area === 'all');
     });
-    areaNav.querySelectorAll('button').forEach(function (b) {
-      b.classList.toggle('is-active', b.dataset.area === area);
+    document.querySelectorAll('.pub-filters [data-area]').forEach(function (b) {
+      b.classList.toggle('is-active', b.dataset.area === area && (area !== 'all' || year === 'all'));
     });
     document.querySelectorAll('.pub-list .tag').forEach(function (t) {
       t.classList.toggle('is-active', area !== 'all' && t.dataset.area === area);
     });
-    hotspots.forEach(function (h) {
-      h.classList.toggle('active', !!active && h.dataset.topic === active);
-    });
-
-    if (note) {
-      if (active) {
-        note.hidden = false;
-        note.textContent = 'Showing ' + active.replace(/-/g, ' ') + ' work' +
-          (lockedTopic ? ' — click the region again to clear' : '');
-      } else {
-        note.hidden = true;
-      }
-    }
+    document.dispatchEvent(new CustomEvent('pubs:area', { detail: { area: area } }));
   }
 
-  // Selecting in one group resets the other two, so only one filter is
-  // ever narrowing the list.
-  function pickYear(v) { year = v; area = 'all'; lockedTopic = null; topic = null; apply(); }
-  function pickArea(v) { area = v; year = 'all'; lockedTopic = null; topic = null; apply(); }
-  function pickTopic(v) { lockedTopic = v; topic = null; year = 'all'; area = 'all'; apply(); }
+  function pickYear(v) { year = v; area = 'all'; apply(); }
+  function pickArea(v) { area = v; year = 'all'; apply(); }
 
   yearNav.addEventListener('click', function (e) {
     var b = e.target.closest('button');
     if (b) pickYear(b.dataset.year);
   });
-  areaNav.addEventListener('click', function (e) {
-    var b = e.target.closest('button');
-    if (b) pickArea(b.dataset.area);
+  [areaNav, moreNav].forEach(function (nav) {
+    if (!nav) return;
+    nav.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (b) pickArea(b.dataset.area);
+    });
   });
+  // A tile in the "All" grid of area visuals (assets/area-visuals.js).
+  document.addEventListener('pubs:pick', function (e) { pickArea(e.detail.area); });
+
   document.querySelector('.pub-list').addEventListener('click', function (e) {
     var t = e.target.closest('.tag');
     if (!t) return;
     pickArea(area === t.dataset.area ? 'all' : t.dataset.area);
   });
 
-  // Scene: hover previews (without disturbing a click-locked selection),
-  // click locks and clears the button filters.
-  hotspots.forEach(function (h) {
-    var t = h.dataset.topic;
-    h.addEventListener('mouseenter', function () { if (!lockedTopic) { topic = t; apply(); } });
-    h.addEventListener('mouseleave', function () { if (!lockedTopic) { topic = null; apply(); } });
-    h.addEventListener('click', function () {
-      pickTopic(lockedTopic === t ? null : t);
-    });
-    h.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        pickTopic(lockedTopic === t ? null : t);
-      }
-    });
-  });
-
-  // ?area=<key> preselects an area filter, so other pages can link
-  // straight to one grouping. Unknown keys are ignored.
   var urlArea = new URLSearchParams(window.location.search).get('area');
   if (urlArea && areas.indexOf(urlArea) !== -1) area = urlArea;
 
