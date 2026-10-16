@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talks — Grace Ra Kim</title>
+  <meta name="description" content="Talks and conference presentations by Grace Ra Kim." />
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <!-- Set the theme before first paint so there's no flash of the wrong colours. -->
+  <script>
+    (function () {
+      try {
+        var s = localStorage.getItem('theme');
+        var dark = s ? s === 'dark'
+          : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <nav class="topbar">
+    <a class="topbar-name" href="index.html">Grace Ra Kim</a>
+    <span class="topbar-links">
+      <a href="research.html">Research</a>
+      <a href="talks.html" aria-current="page">Talks</a>
+      <a href="news.html">News</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">light</button>
+    </span>
+  </nav>
+
+  <main class="talks-page">
+    <h2>Talks</h2>
+    <p class="page-intro">Conference presentations and invited talks.</p>
+
+    <!-- ===== Add new talks at the TOP =====
+         Thumbnails live in assets/talks/ (for a YouTube video, the video's
+         own thumbnail, named by its ID). Each entry has a Video button; until
+         a video exists, use a .talk-thumb.is-pending placeholder and a greyed
+         Video button. -->
+    <ol class="talk-list">
+      <li>
+        <span class="talk-thumb is-pending" aria-hidden="true"><span class="pending-label">Upcoming<br />Oct 19&ndash;20</span></span>
+        <div class="talk-text">
+          <h3 class="talk-title">Bringing Federated Learning to Space</h3>
+          <p class="talk-meta">2026 Federate AI Summit, Boston, MA &middot; October 19&ndash;20, 2026</p>
+          <p class="pub-links">
+            <a class="link-todo" aria-disabled="true">Video</a>
+            <a href="https://www.federateaisummit.com/">Event</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="talk-thumb is-pending" aria-hidden="true"><span class="pending-label">Video<br />coming soon</span></span>
+        <div class="talk-text">
+          <h3 class="talk-title">Chance-Constrained Belief-Space Maneuver Planning for Autonomous Collision Avoidance Under Uncertainty</h3>
+          <p class="talk-meta">Advanced Maui Optical and Space Surveillance Technologies Conference (AMOS) &middot; 2026</p>
+          <p class="pub-links">
+            <a class="link-todo" aria-disabled="true">Video</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <a class="talk-thumb" href="https://www.youtube.com/watch?v=cEMKY-uUl5g" aria-label="Watch: Semi-Decentralized Multi-Spacecraft Collision Avoidance under Communication Constraints">
+          <img src="assets/talks/cEMKY-uUl5g.jpg" alt="" loading="lazy" />
+          <span class="play" aria-hidden="true"></span>
+        </a>
+        <div class="talk-text">
+          <h3 class="talk-title">Semi-Decentralized Multi-Spacecraft Collision Avoidance under Communication Constraints</h3>
+          <p class="talk-meta">AAS/AIAA Astrodynamics Specialist Conference (ASC) &middot; 2026</p>
+          <p class="pub-links">
+            <a href="https://www.youtube.com/watch?v=cEMKY-uUl5g">Video</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="talk-thumb is-pending" aria-hidden="true"><span class="pending-label">Video<br />coming soon</span></span>
+        <div class="talk-text">
+          <h3 class="talk-title">Scalable Ground Station Selection for Large LEO Constellations</h3>
+          <p class="talk-meta">IEEE Aerospace Conference &middot; 2026</p>
+          <p class="pub-links">
+            <a class="link-todo" aria-disabled="true">Video</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <a class="talk-thumb" href="https://www.youtube.com/watch?v=cPSy2-CtGkU" aria-label="Watch: Adaptive Science Operations in Deep Space Missions Using Offline Belief State Planning">
+          <img src="assets/talks/cPSy2-CtGkU.jpg" alt="" loading="lazy" />
+          <span class="play" aria-hidden="true"></span>
+        </a>
+        <div class="talk-text">
+          <h3 class="talk-title">Adaptive Science Operations in Deep Space Missions Using Offline Belief State Planning</h3>
+          <p class="talk-meta">International Conference on Space Robotics (iSpaRo) &middot; 2025</p>
+          <p class="pub-links">
+            <a href="https://www.youtube.com/watch?v=cPSy2-CtGkU">Video</a>
+          </p>
+        </div>
+      </li>
+    </ol>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 Grace Ra Kim &middot; Last updated October 2026</p></footer>
+  <script src="assets/theme.js"></script>
+</body>
+</html>

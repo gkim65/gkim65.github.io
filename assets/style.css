@@ -1,5 +1,6 @@
 /* ===== Design tokens ===== */
 :root {
+  --topbar-h: 65px;      /* height of the sticky top bar (two rows on phones) */
   --ink: #14181f;        /* primary text */
   --muted: #5b6470;      /* secondary text */
   --line: #e2e5ea;       /* hairlines */
@@ -170,18 +171,33 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 .pages a { border-bottom: none; font-style: italic; color: var(--muted); }
 .pages a:hover { color: var(--accent); }
 
-/* ===== Shared top bar ===== */
+/* ===== Shared top bar =====
+   Full-width bar with a hairline underneath; the side padding lines its
+   contents up with the 960px page column (960 - 2 x 28 = 904). */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 28px;
-  max-width: 960px;
-  margin: 0 auto;
+  padding: 18px max(28px, calc((100% - 904px) / 2));
+  border-bottom: 1px solid var(--line);
   font-family: var(--mono);
   font-size: 0.82rem;
+  /* Stays pinned while the page scrolls; other sticky elements and anchor
+     targets offset themselves by --topbar-h so they clear it. */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
 }
 .topbar a { border-bottom: none; }
+/* The name matches the h1 on the landing page. */
+.topbar-name {
+  font-family: var(--serif);
+  font-weight: bold;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
 .topbar-links a { margin-left: 20px; color: var(--muted); }
 .topbar-links a[aria-current="page"] { color: var(--ink); }
 /* Hover: match the name link and theme toggle. Listed after the
@@ -205,11 +221,11 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 }
 .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
 /* ===== Publications ===== */
-.pubs-page { max-width: 960px; margin: 0 auto; padding: 6vh 28px 10vh; }
-.pubs-page h2 { font-size: 1.4rem; margin: 0 0 26px; }
+.pubs-page { max-width: 960px; margin: 0 auto; padding: 4vh 28px 10vh; scroll-margin-top: var(--topbar-h); }
+.pubs-page h2 { font-size: 1.4rem; margin: 0 0 4px; }
 
 .pubs-layout { display: flex; gap: 44px; align-items: flex-start; }
-.pub-filters { flex: 0 0 150px; position: sticky; top: 24px; }
+.pub-filters { flex: 0 0 150px; position: sticky; top: calc(var(--topbar-h) + 24px); }
 .filter-group { margin-bottom: 22px; }
 .filter-label {
   font-family: var(--mono);
@@ -371,13 +387,74 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   color: var(--muted);
 }
 
-/* ===== Projects page ===== */
-.projects { max-width: 720px; margin: 0 auto; padding: 4vh 28px 10vh; }
-.projects h2 { font-size: 1.4rem; }
-.project-list { list-style: none; padding: 0; }
-.project-list li { padding: 20px 0; border-top: 1px solid var(--line); }
-.project-list h3 { margin: 0 0 6px; }
-.project-list p { margin: 0; color: var(--muted); }
+/* ===== Talks page ===== */
+.talks-page { max-width: 960px; margin: 0 auto; padding: 4vh 28px 10vh; }
+.talks-page h2 { font-size: 1.4rem; margin: 0 0 4px; }
+.talk-list { list-style: none; padding: 0; margin: 0; max-width: 720px; }
+.talk-list li { display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-top: 1px solid var(--line); }
+.talk-list li:first-child { border-top: none; padding-top: 0; }
+.talk-text { min-width: 0; }
+/* Video thumbnail with a play button; 16:9 like the source. */
+.talk-thumb {
+  position: relative;
+  flex: 0 0 192px;
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--line);
+}
+.talk-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .25s; }
+.talk-thumb .play {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 40px; height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: rgba(10, 14, 28, 0.62);
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.85);
+  transition: background-color .2s;
+}
+.talk-thumb .play::after {
+  content: "";
+  position: absolute;
+  left: 15px; top: 12px;
+  border-style: solid;
+  border-width: 8px 0 8px 13px;
+  border-color: transparent transparent transparent #fff;
+}
+/* Placeholder for a talk without a video yet (upcoming, or not posted). */
+.talk-thumb.is-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #0a1022, #16294f);
+  box-shadow: inset 0 0 0 1px rgba(145, 167, 255, 0.35);
+}
+.pending-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #c3cfff;
+}
+.talk-thumb:hover img { transform: scale(1.04); }
+.talk-thumb:hover .play { background: var(--accent); }
+.talk-title { font-family: var(--serif); font-size: 1.02rem; font-weight: normal; line-height: 1.4; margin: 0 0 5px; }
+.talk-meta { margin: 0; font-size: 0.86rem; font-style: italic; color: var(--muted); }
+
+/* ===== Footer (every page) ===== */
+.site-footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 28px 32px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.site-footer p { margin: 0; padding-top: 18px; border-top: 1px solid var(--line); }
 
 /* ===== News page ===== */
 .news-page { max-width: 960px; margin: 0 auto; padding: 4vh 28px 10vh; }
@@ -392,7 +469,7 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   gap: 2px;
   flex: 0 0 88px;
   position: sticky;
-  top: 24px;           /* keeps the years in view while the list scrolls */
+  top: calc(var(--topbar-h) + 24px);   /* keeps the years in view while the list scrolls */
 }
 .year-btn {
   font-family: var(--mono);
@@ -453,8 +530,6 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
 @media (max-width: 600px) {
   .home { padding-top: 4vh; }
   .home-head { gap: 24px; }
-  .portrait { width: 130px; height: 130px; }
-  .portrait-col { flex-basis: 130px; }
   .links { font-size: 0.76rem; gap: 6px; }
 
   /* News: year filter becomes a horizontal strip above the list */
@@ -472,6 +547,11 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   }
   .year-btn.is-active { border-left-color: transparent; border-bottom-color: var(--accent); }
   .news-thumb { width: 102px; height: 68px; flex-basis: 102px; }
+  .talk-list li { gap: 14px; }
+  .talk-thumb { flex-basis: 120px; }
+  .pending-label { font-size: 0.58rem; }
+  .talk-thumb .play { width: 30px; height: 30px; margin: -15px 0 0 -15px; }
+  .talk-thumb .play::after { left: 11px; top: 8px; border-width: 7px 0 7px 11px; }
 
   /* Publications: sidebar filters become horizontal strips above the list.
      At 375px a 150px sidebar would leave ~125px for titles. */
@@ -511,41 +591,43 @@ h1 { font-size: 2rem; margin: 0 0 2px; letter-spacing: -0.01em; }
   .area-tile canvas { border-radius: 6px; }
   .area-tile-label { font-size: 0.7rem; }
 
-  /* Landing page: let the intro drop below the portrait cleanly.
-     min-width:0 (not 100%) — 100% is measured against the flex container
-     and pushes the text past the right edge once the 190px portrait and
-     the 40px gap are also in the row. */
-  .home-head { gap: 20px; }
-  .intro { min-width: 0; flex-basis: 100%; }
+  /* Landing page: stack portrait, profile links, name and role, centred;
+     the bio and sections below stay left-aligned for reading. */
+  .home-head { flex-direction: column; align-items: center; gap: 18px; }
+  .portrait-col { flex: none; display: flex; flex-direction: column; align-items: center; }
+  .portrait { width: 150px; height: 150px; }
+  .links { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px 18px; }
+  .intro { flex: none; width: 100%; min-width: 0; }
+  .intro h1, .intro .role { text-align: center; }
   .home-section { margin-left: 0; margin-top: 28px; }
   .selected-pubs a { overflow-wrap: break-word; }
   .keywords { gap: 8px; }
   .keywords a { font-size: 0.7rem; padding: 5px 11px 5px 9px; gap: 6px; }
 
   /* Nav wraps to a second line rather than clipping "News". */
+  :root { --topbar-h: 84px; }
   .topbar {
     padding: 12px 18px;
     flex-wrap: wrap;
-    gap: 6px 0;
+    gap: 6px 18px;
     font-size: 0.78rem;
   }
   .topbar-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; }
   .topbar-links a { margin-left: 0; }
   .theme-toggle { margin-left: 0; }
-  .home, .pubs-page, .news-page, .projects { padding-left: 18px; padding-right: 18px; }
+  .home, .pubs-page, .news-page, .talks-page, .site-footer { padding-left: 18px; padding-right: 18px; }
 
   /* Guard against unbreakable strings (DOIs, long arXiv ids, URLs) forcing
      the layout wide. No hyphens: auto — it hyphenates ordinary prose
      mid-word, which reads badly in the bio. */
-  .pub-title, .pub-authors, .pub-venue, .news-title, .bio, .page-intro, h1, h2 {
+  .pub-title, .pub-authors, .pub-venue, .news-title, .talk-title, .bio, .page-intro, h1, h2 {
     overflow-wrap: break-word;
   }
 }
 
 /* Very narrow (iPhone SE and similar) */
 @media (max-width: 380px) {
-  .portrait, .portrait-col { width: 108px; height: 108px; flex-basis: 108px; }
-  .portrait-col { height: auto; }
+  .portrait { width: 128px; height: 128px; }
   .news-thumb { width: 84px; height: 56px; flex-basis: 84px; }
   .news-item { gap: 12px; }
   h1 { font-size: 1.7rem; }
